@@ -1,0 +1,22 @@
+USER: Yaguang Ding [dingyag1]
+TASK: butter
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.000 secs, 5580 KB]
+   Test 2: TEST OK [0.011 secs, 5580 KB]
+   Test 3: TEST OK [0.011 secs, 5580 KB]
+   Test 4: TEST OK [0.011 secs, 5580 KB]
+   Test 5: TEST OK [0.011 secs, 5580 KB]
+   Test 6: TEST OK [0.022 secs, 5580 KB]
+   Test 7: TEST OK [0.054 secs, 5580 KB]
+   Test 8: TEST OK [0.097 secs, 5580 KB]
+   Test 9: TEST OK [0.151 secs, 5580 KB]
+   Test 10: TEST OK [0.173 secs, 5580 KB]
+
+All tests OK.
+Your program ('butter') produced all correct answers!  This is your
+submission #6 for this problem.  Congratulations!

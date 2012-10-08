@@ -1,0 +1,19 @@
+USER: Yaguang Ding [dingyag1]
+TASK: contact
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.022 secs, 3236 KB]
+   Test 2: TEST OK [0.000 secs, 3236 KB]
+   Test 3: TEST OK [0.000 secs, 3236 KB]
+   Test 4: TEST OK [0.011 secs, 3236 KB]
+   Test 5: TEST OK [0.065 secs, 3236 KB]
+   Test 6: TEST OK [0.108 secs, 3236 KB]
+   Test 7: TEST OK [0.119 secs, 3236 KB]
+
+All tests OK.
+Your program ('contact') produced all correct answers!  This is your
+submission #6 for this problem.  Congratulations!

@@ -1,0 +1,53 @@
+USER: Yaguang Ding [dingyag1]
+TASK: lgame
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.032 secs, 4080 KB]
+   Test 2: TEST OK [0.043 secs, 4080 KB]
+   Test 3: TEST OK [0.032 secs, 4080 KB]
+   Test 4: TEST OK [0.043 secs, 4080 KB]
+   Test 5: TEST OK [0.011 secs, 4080 KB]
+   Test 6: TEST OK [0.032 secs, 4080 KB]
+   Test 7: TEST OK [0.011 secs, 4080 KB]
+   Test 8: TEST OK [0.032 secs, 4080 KB]
+   Test 9: TEST OK [0.043 secs, 4080 KB]
+   Test 10: TEST OK [0.032 secs, 4080 KB]
+   Test 11: TEST OK [0.043 secs, 4080 KB]
+   Test 12: TEST OK [0.032 secs, 4080 KB]
+
+All tests OK.
+Your program ('lgame') produced all correct answers!  This is your
+submission #7 for this problem.  Congratulations!
+
+Here are the test data inputs:
+
+------- test 1 -------
+jicuzza
+------- test 2 -------
+cuqak
+------- test 3 -------
+pofax
+------- test 4 -------
+rammoxy
+------- test 5 -------
+culatu
+------- test 6 -------
+gvutvac
+------- test 7 -------
+bhruthr
+------- test 8 -------
+wagje
+------- test 9 -------
+thryst
+------- test 10 -------
+fnupfig
+------- test 11 -------
+bobdead
+------- test 12 -------
+abcdefg
+Keep up the good work!
+Thanks for your submission!

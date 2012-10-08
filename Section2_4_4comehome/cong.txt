@@ -1,0 +1,21 @@
+USER: Yaguang Ding [dingyag1]
+TASK: comehome
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.022 secs, 3028 KB]
+   Test 2: TEST OK [0.022 secs, 3028 KB]
+   Test 3: TEST OK [0.000 secs, 3028 KB]
+   Test 4: TEST OK [0.011 secs, 3028 KB]
+   Test 5: TEST OK [0.022 secs, 3028 KB]
+   Test 6: TEST OK [0.011 secs, 3028 KB]
+   Test 7: TEST OK [0.043 secs, 3028 KB]
+   Test 8: TEST OK [0.022 secs, 3028 KB]
+   Test 9: TEST OK [0.011 secs, 3028 KB]
+
+All tests OK.
+Your program ('comehome') produced all correct answers!  This is your
+submission #2 for this problem.  Congratulations!

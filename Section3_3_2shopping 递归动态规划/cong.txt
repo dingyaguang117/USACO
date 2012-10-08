@@ -1,0 +1,26 @@
+USER: Yaguang Ding [dingyag1]
+TASK: shopping
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.000 secs, 3052 KB]
+   Test 2: TEST OK [0.011 secs, 3052 KB]
+   Test 3: TEST OK [0.000 secs, 2920 KB]
+   Test 4: TEST OK [0.011 secs, 3052 KB]
+   Test 5: TEST OK [0.022 secs, 3052 KB]
+   Test 6: TEST OK [0.000 secs, 3052 KB]
+   Test 7: TEST OK [0.011 secs, 3052 KB]
+   Test 8: TEST OK [0.011 secs, 3052 KB]
+   Test 9: TEST OK [0.011 secs, 3052 KB]
+   Test 10: TEST OK [0.076 secs, 3052 KB]
+   Test 11: TEST OK [0.108 secs, 3052 KB]
+   Test 12: TEST OK [0.097 secs, 3052 KB]
+
+All tests OK.
+Your program ('shopping') produced all correct answers!  This is your
+submission #3 for this problem.  Congratulations!
+
+Here are the test data inputs:

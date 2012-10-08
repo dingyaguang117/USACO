@@ -1,0 +1,20 @@
+USER: Yaguang Ding [dingyag1]
+TASK: fence
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.011 secs, 4036 KB]
+   Test 2: TEST OK [0.000 secs, 4036 KB]
+   Test 3: TEST OK [0.000 secs, 4036 KB]
+   Test 4: TEST OK [0.022 secs, 4036 KB]
+   Test 5: TEST OK [0.000 secs, 4036 KB]
+   Test 6: TEST OK [0.011 secs, 4036 KB]
+   Test 7: TEST OK [0.000 secs, 4036 KB]
+   Test 8: TEST OK [0.032 secs, 4036 KB]
+
+All tests OK.
+Your program ('fence') produced all correct answers!  This is your
+submission #3 for this problem.  Congratulations!

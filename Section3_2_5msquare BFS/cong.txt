@@ -1,0 +1,21 @@
+USER: Yaguang Ding [dingyag1]
+TASK: msquare
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.000 secs, 3032 KB]
+   Test 2: TEST OK [0.011 secs, 3032 KB]
+   Test 3: TEST OK [0.000 secs, 3032 KB]
+   Test 4: TEST OK [0.000 secs, 3032 KB]
+   Test 5: TEST OK [0.054 secs, 4088 KB]
+   Test 6: TEST OK [0.086 secs, 5144 KB]
+   Test 7: TEST OK [0.173 secs, 6464 KB]
+   Test 8: TEST OK [0.238 secs, 6992 KB]
+
+All tests OK.
+YOUR PROGRAM ('msquare') WORKED FIRST TIME!  That's fantastic
+-- and a rare thing.  Please accept these special automated
+congratulations.

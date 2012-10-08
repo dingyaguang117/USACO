@@ -1,0 +1,268 @@
+USER: Yaguang Ding [dingyag1]
+TASK: cryptcow
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.000 secs, 3052 KB]
+   Test 2: TEST OK [0.000 secs, 3052 KB]
+   Test 3: TEST OK [0.000 secs, 3052 KB]
+   Test 4: TEST OK [0.000 secs, 3052 KB]
+   Test 5: TEST OK [0.011 secs, 3052 KB]
+   Test 6: TEST OK [0.734 secs, 3052 KB]
+   Test 7: TEST OK [0.000 secs, 3052 KB]
+   Test 8: TEST OK [0.011 secs, 3052 KB]
+   Test 9: TEST OK [0.788 secs, 3052 KB]
+   Test 10: TEST OK [0.810 secs, 3052 KB]
+
+All tests OK.
+Your program ('cryptcow') produced all correct answers!  This is your
+submission #45 for this problem.  Congratulations!
+
+Here are the test data inputs:
+
+------- test 1 -------
+Begin the Escape execution at the Break of Dawn
+------- test 2 -------
+CBegin the EscCution at the BreOape execWak of OWDawn
+------- test 3 -------
+Begin the EscCutino at the BreOape execWak of Dawn
+------- test 4 -------
+Begin the EscCCCCCCution at the BreOOOOOOape execWWWWWWak of Dawn
+------- test 5 -------
+CaOBegin the EscWpe CnCak OexeOt the BWcutioWofO aCreW Dawn
+------- test 6 -------
+BCC execuO the EsCinCaWCCreaOpWtiOn at OCDOcOWaOegCeWtheOW BWoWk of Wwn
+------- test 7 -------
+BegiCoWCWDOk oCthe EscOWaCn Oe Of On WexecutChe BreOOCat tWiWapCWawn
+------- test 8 -------
+BeCOgC CC execuOf DOBCiCCrWaOOt theCOCeak oWWin Oon aWtheOOW EscapeWtWWWwn
+------- test 9 -------
+CChCC Oe BWOWEscapCreOeOegin tWOe WatWaOe OBCexCOhWC of O tCWcutionWkWDawn
+------- test 10 -------
+CCC COhe BWOWEscapCreOeOegin tWOe WatWaOe OBCexCOhWC of O tCWcutionWkWDawn
+Keep up the good work!
+Thanks for your submission!
+
+
+/*
+ID: lin_jia1
+PROG: cryptcow
+LANG: C++
+*/
+#include<cstdio>
+#include<iostream>
+#include<cstring>
+#include <fstream>
+#include<algorithm>
+#include<cmath>
+#include<queue>
+#include<vector>
+#include<string>
+#include<deque>
+#include<stack>
+#include<ctime>
+#include<cstdlib>
+#include<set>
+using namespace std;
+#define ll long long
+#define MAXN 1000
+#define INF 1<<30
+#define EPS 1e-6
+#define MOD 99991//As a big prime
+
+//我的妈呀，勉勉强强，终于过了
+//之前一直在第9个test那里tle到我死啊
+//最后加多一种判断，才勉强过的
+//这个判断就是如果当前串的c，o，w的前缀或后缀不是目标串的前缀或后缀就剪掉
+/*优化技巧
+1.由于添加的COW是一起的，因此给出的字符串的字符个数应该等于47
+（目标字符串的长度）+3*k。如果不满足就可直接判断无解。 
+2.除了COW三个字符外，其他的字符的个数应该和目标串相一致。
+如果不一致也可直接判断无解。
+3.搜索中间肯定会出现很多相同的情况，
+因此需要开一个hash来记录搜索到过哪些字符串，每搜索到一个字符串，就判重。
+如果重复直接剪枝。这里的字符串的hash函数可以采用ELFhash，
+但由于ELFhash的数值太大，所以用函数值对一个大质数（我用的是99991）取余，
+这样可以避免hash开得太大，同时又可以减少冲突。 
+4.对搜索到的字符串，设不包含COW的最长前缀为n前缀（同样也可以定义n后缀），
+那么如果n前缀不等于目标串的长度相同的前缀，那么当前字符串一定无解，剪枝。
+N后缀也可采取相同的判断方法。 
+5.一个有解的字符串中，COW三个字母最早出现的应该是C，最后出现的应该是W，
+如果不满足则剪枝。 
+6.当前字符串中任意两个相邻的COW字母中间所夹的字符串一定在目标串中出现过。
+如果不符合可立即剪枝。 
+7.需要优化搜索顺序。经过试验我们可以发现，O的位置对于整个COW至关重要。
+可以说，O的位置决定了整个串是否会有解。因此，我们在搜索时，
+应该先枚举O的位置，然后再枚举C和W的位置。其中W要倒序枚举。
+这样比依次枚举COW至少要快20~30倍。 
+8.在判断当前串的子串是否包含在目标串中的时候，
+可以先做一个预处理：记录每一个字母曾经出现过的位置，
+然后可以直接枚举子串的第一个字母的位置。这样比用pos要快2倍左右。*/
+string Key="Begin the Escape execution at the Break of Dawn";
+char s[100];
+char ss[80]={'B','e','g','i','n',' ','t','h','e',' ','E','s','c','a','p','e',' ','e','x','e','c','u','t','i','o','n',' ','a','t',' ','t','h','e',' ','B','r','e','a','k',' ','o','f',' ','D','a','w','n'};
+bool visit[99992];
+int num,len;
+int ELFhash(char *key)
+{ 
+ unsigned long h=0;
+ while(*key)
+ { 
+   h=(h<<4)+*key++;
+   unsigned long g=h&0Xf0000000L;
+   if(g) h^=g>>24;
+   h&=~g;
+ }
+ return h%MOD;
+}//看不懂的hash
+void change(int a,int b,int c)
+{
+ char p[100],j=0;
+ for(int i=0;i<a;i++)
+   p[j++]=s[i];
+ for(int i=b+1;i<c;i++)
+   p[j++]=s[i];
+ for(int i=a+1;i<b;i++)
+   p[j++]=s[i];
+ for(int i=c+1;i<len;i++)
+   p[j++]=s[i];
+ for(int i=0;i<j;i++)//{
+   s[i]=p[i];//printf("%c",s[i]);//}printf("\n");
+ return;
+}
+bool check()
+{
+ int a=0,b=-1;
+ for(int i=0;i<len;i++)
+ {
+   if(s[i]!='C' && s[i]!='O' && s[i]!='W')
+   {
+    if(s[i]!=ss[i])
+     return false;
+   }
+   else
+   {
+    a=0;
+    b=i;
+    break;
+   }
+ }
+ for(int i=len-1;i>=0;i--)
+ {
+   if(s[i]!='C' && s[i]!='O' && s[i]!='W')
+   {
+    if(s[i]!=ss[47-(len-i)])
+     return false;
+   }
+   else
+    break;
+ }
+ //到这里为止就是判断目标串的前缀或后缀的
+ while(1)
+ {
+   int i;
+   for(i=b+1;i<len;i++)
+    if(s[i]=='C' || s[i]=='O' || s[i]=='W' || i==len-1)
+    {
+     a=b;
+     b=i;
+     break;
+    }
+    if(i>=len)
+     break;
+    int j=0,p=a+1;
+    while(j<47 && len-j>b-a-1)
+    {
+     int q=j;
+     while(p<b && q<47 && s[p]==ss[q])
+     {
+      p++;
+      q++;
+     }
+     if(p>=b)
+      break;
+     else
+     {
+      j++;
+      p=a+1;
+     }
+    }
+    if(p<b && j>=47)
+    return false;
+ }
+ //这里就是看一下c，o，w之间的字符串是不是目标串的子串
+ return true;
+}
+bool dfs(int deep)
+{
+ if(deep<=0)
+ {
+   int t;
+   for(t=0;t<47;t++)
+    if(s[t]!=ss[t])
+     return false;
+   /*for(int p=0;p<len;p++)
+   {s2[p]=s[p];printf("%c",s[p]);}printf("\n");*/
+   if(t>=47)
+    return true;
+ }
+ for(int i=0;i<len;i++)
+   if(s[i]=='O')
+   {
+    for(int j=0;j<i;j++)
+     if(s[j]=='C')
+     {
+      for(int k=len-1;k>=i+1;k--)
+       if(s[k]=='W')
+       {
+        char s2[100];
+        for(int t=0;t<len;t++)
+         s2[t]=s[t];
+        change(j,i,k);
+        len-=3;
+        if(!visit[ELFhash(s)] && check())
+        {
+         visit[ELFhash(s)]=1;
+         if(dfs(deep-1))
+          return true;
+        }
+        len+=3;
+        for(int t=0;t<len;t++)
+         s[t]=s2[t];
+       }
+     }
+   }
+   return false;
+}
+int main()
+{
+ freopen("cryptcow.in","r",stdin);
+ freopen("cryptcow.out","w",stdout);
+ while(gets(s)>0)
+ {
+   int deep=0,deep1=0,deep2=0,a=0,b=0,c=0;
+   len=strlen(s);
+   for(int i=0;i<len;i++)
+   {
+    if(s[i]=='W')
+     deep++;
+    if(s[i]=='O')
+     deep1++;
+    if(s[i]=='C')
+     deep2++;
+   }
+   memset(visit,0,sizeof(visit));
+   if(deep==deep1 && deep1==deep2 && len-3*deep==47 && check() && dfs(deep))
+   {
+    printf("1 %d\n",deep);
+   }
+   else
+   {
+    printf("0 0\n");
+   }
+ }
+ return 0;
+}

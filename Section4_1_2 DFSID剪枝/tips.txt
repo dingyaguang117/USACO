@@ -1,0 +1,43 @@
+从Fence Rails看搜索剪枝 
+标签： USACO  2007-03-10 20:11
+从Fence Rails看搜索剪枝
+TASK: fence8
+LANG: C
+
+Compiling...
+Compile: OK
+
+Executing...
+      Test 1: TEST OK [0 secs]
+      Test 2: TEST OK [0.004 secs]
+      Test 3: TEST OK [0.004 secs]
+      Test 4: TEST OK [0.016 secs]
+      Test 5: TEST OK [0.004 secs]
+      Test 6: TEST OK [0.044 secs]
+      Test 7: TEST OK [0 secs]
+      Test 8: TEST OK [0.032 secs]
+      Test 9: TEST OK [0.048 secs]
+      Test 10: TEST OK [0 secs]
+      Test 11: TEST OK [0.004 secs]
+      Test 12: TEST OK [0.004 secs]
+
+All tests OK.
+Your program ('fence8') produced all correct answers!  This is your
+submission #2 for this problem.  Congratulations!
+
+    回顾一下假期的OI学习历程，感觉留下印象最深刻的就是这道Fence Rails，这是一道很有价值的搜索题，它既不像某些搜索题那样过分BT，但也有着一定的难度，可以作为搜索剪枝类题型的经典例题。网上的大牛有许多种做法，在这里将思路总结一下。
+    一、搜索方式的选择
+    搜索方式也可以选择么？当然可以，可以看出，这道题应该使用DFS，但它无法像BFS又无法确定目标结点在搜索树中的深度，这时我们可以尝试使用迭代加深的深度优先搜索(DFSID)，其主要思想就是将本深度不可知的求解问题转化成假设目标节点在某一深度上是否成立的判定问题，从而实现问题的求解。
+    二、制定搜索方案
+    既然确定了使用DFSID，搜索方案也就很简单了。从1到R枚举假设可以切出的Rails，然后调用DFSID函数，枚举Rails所在的Boards，判断是否可以切出这些Rails，如果可以，继续枚举Rails，否则结束枚举，输出答案。
+    很容易看出，如果要切出X块Rails，只要判断能不能切出前N小的Rails就可以了。另外在搜索是要先放大的Rails，先切短的Boards，这样在剪枝的时候会爽一点。
+    三、剪枝
+    剪枝是搜索的灵魂所在，没有剪枝的硬搜是毫无技术含量的。
+    本题可以用到的剪枝有以下几个。
+    1.在确定深搜界限的时候我们可以使用二分法，将所能得到的最多的rails数确定在(p,q)这个区间内，不断缩小这个区间，直到求解成功，这个方法应该不错，不过我并没有使用这个剪枝。
+    2.仔细看看这道题的数据范围，Rails的数量最多可达1023，然而每条Rail的长度最大却只有128，这也就在暗示我们，一定会有不少Rails的长度是相同的，抓住这一特点，我们可以考虑，如果rail[i+1]=rail[i]时，rail[i+1]所对应的board一定是rail[i]所对应的oard之后的Board。这个就不用证明了吧？
+    3.当一块Board经过n次(n>=0)的切割，其长度等于某一块未被放入的Rail的长度，我们就直接把这块Rail放进去好了。正确性是很容易证明的，自己想一想就可以了。但是否能够起到优化的作用……没试过。
+    4.同上，当一块Board经过n次(n>=0)的切割，其长度变得比最短的一块Rail还小，那么这块Board的剩余部分就被白白扔掉了。如果被浪费掉的Board长度+要切出的几块Rails的总长度>所有Boards的总长度，那么你就无论如何也切不出这些Rails了。
+    事实证明，剪枝4的效果那是相当的好，当我去掉这个剪枝后，惊奇地发现连Test 4都过不去。仔细想一想，就不难证明为什么这个剪枝这么有效了。
+
+    实际上搜索题就是这样，首先确定搜索的方式和方案，然后再加入剪枝，在剪枝的时候要注意，想到的剪枝不一定全用，要考虑一下对程序长度的影响以及其附带操作会不会使得时间和空间的负担变得更重，另外，本来貌不惊人的小剪枝也可能有大作用。

@@ -1,0 +1,538 @@
+http://hi.baidu.com/dragon_eric123/blog/item/1705d1ae077473f3fbed50e8.html
+给一个图 问你封住哪些口后，从源点到汇点没有流量，点数N<=20,边数M<=1000
+
+思路：建图，如果点A到B的流量为C，则改为C=C*1001+1,这样改的话由于总的边数少于1000，最后求得最大流F/1001就可以得到真正的最大流，因为1的累加不可能超过1001 。F％1001就是最小边割集的边数。然后由源点开始DFS，去到的点和去不到的点之间如果有条边，那么这条边就是其中的一条割。
+
+由于答案不是唯一的，题目要求求边的号码要字典序最小的话，上述算法就不可以保证了。可以：
+从字典序号小到大枚举每条边，如果去掉这条边后最大流的流量flow加上边的容量c等于原来的流量now的话就可以确定这是割集之一，修改最大流now，再继续枚举。
+
+之所以要修改now，如下边：
+10   10
+1--->2--->3   1连2连3 容量都是10，枚举了边12后发现12是割，如果不改流量now，那么枚举23也可以是割，而最小的割数只要1就够了，这也是枚举的原因。
+
+感觉×1001＋1的方法很赞~~~
+
+
+
+
+http://starforever.blog.hexun.com/2391971_d.html
+本题是一个经典的最小割问题，应用最大流最小割定理，以每条边的费用为边容量构建有向图，然后求出从源点到汇点的最大流，即最小切割费用。
+
+本题棘手的地方在第二问，输出需要切割的边，使切割边数最小，在保证切割边数最小的情况下，使输出的字典序最小（第一个小的字典序小，第一个相等就看第二个，类推）。
+
+我采用了一种贪心的算法：
+
+把所有边按照切割费用降序排列，费用相同就按输入顺序升序排列。
+
+遍历所有的边e，设e的流量为c(e)，如果c(e)<=当前最大流且把e去掉后新的最大流=当前最大流-c(e)。那么把当前最大流设为新的最大流，取e为答案输出。
+
+这种算法可以AC，但正确性还有待证明。
+
+顺便说一下，这道题的标程是错的，它只能保证切割边数最小，不能保证输出的字典序最小。用标程提交Case 11会WA，ft。
+
+不过标程的算法效率非常快，而且很具有启发性，我认为有必要介绍一下。
+
+因为边数最多只有1000条，所以我们修改每条边的流量为1001倍+1。
+
+然后再对这个图求最大流，因为这里考虑了边数，使对应的最小割同时满足切割边数最小。（切割边数为最大流 mod 1001）
+
+然后只需对源点做一次floodfill，则所有边(i,j)，满足i被访问，j未被访问就是应切割的边。
+
++++++++++++++++++++++++++++++++++++++=
+
+http://hi.baidu.com/docoihome/blog/item/6e94df2796d2391c8a82a11c.html
+题目：
+    给你一个流网络，要你求出最大流，找出最小割。如果有等小的割，取桥数最少的，再取桥编号较小的。
+ 
+解题思路：
+    1、求最大流，可以参见4.3.1
+    2、求最小割 ｛
+          (1) 用floodfill求出一个遍历：
+                  while(dfs(1)) {
+                       memset(visited,0,sizeof(visited)) ;
+                       visited[0] = 1001 ;
+                   }
+          (2) 统计并输出：
+                  for ( int i = 1 ; i <= m ; i ++ )
+                       if ( visited[Link_a[i]] && !visited[Link_b[i]] )
+                           cout << i << endl ;
+思路补充：
+    在很多别人的程序中，都在没有统计前就直接输出桥的数目。
+    他们的思路是把所有的流都扩大 1001 倍 再加 1 。
+    那么：
+        最大流 = 新图最大流 / 1001 
+        桥数   = 新图最大流 % 1001
+代码：
+    主要吧求割的部分的程序贴写吧，网络流是随意的。
+// Main ...
+    while(dfs(1)) {
+         memset(visited,0,sizeof(visited)) ;
+         visited[0] = 1001 ;
+     }
+     visited[1] = 1 ;
+     r /= 500501 ;
+     cout << r/1001 << " " << r%1001 << endl ;
+     
+     for ( int i = 1 ; i <= m ; i ++ )
+         if ( visited[Link_a[i]] && !visited[Link_b[i]] )
+             cout << i << endl ;
+ // Dfs ...
+        bool dfs(int now) {
+             if ( now == n ) {
+                 getmore() ;
+                 return 1 ;
+             }
+             for ( int i = 1 ; i <= linked[now][0] ; i ++ )
+                  if ( !visited[linked[now][i]] ) {
+                      int t = linked[now][i] ;
+                     if ( (fx[now][t] == 1 && used[now][t] < c[now][t] ) || (fx[now][t] == 0 && used[t][now] > 0 ) ) {
+                          visited[t] = now ;
+                     if ( dfs(t) )
+                          return 1 ;
+                 }
+             }
+             return 0 ;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+USACO 4.4.2 Pollutant Control
+提交次数:3次
+
+极度不爽!!!发泄!!!一个上午的时间都给它了!!!
+一开始通过点的流量关系,对于边(u,v),若点u不可扩展(入边0流,出边满流)则是最小割编集,但是我发现这种状况并不适用...于是上网找了另一种方法是通过求最大流与除去该边的最大流之差是否等于该边容量算的.
+
+但是...一个小小的失误让我花了一个上午调试
+我将最大流赋值给一个变量,max:=maxflow(1,n);max的范围我设的integer,而maxflow是longint,于是乎,报错201.
+fp2.2.0版的错了它也不说在哪里,按f8闪几下就201,而我换noi版的则会在读入就出错了.
+很囧很郁闷(临时想到这个词,不知是不是第一个发明这个词的人呢?)......  
+{
+TASK:milk6
+LANG:PASCAL
+}
+{$D+,L+,Y+,R+,S+,I+,Q+}
+program ditch;
+const
+    maxn=32;
+    maxm=1000;
+type
+    edge=array[1..3] of qword;
+var
+    n,m:integer;
+    capacity,cap:array[1..maxn,1..maxn] of qword;
+    truck:array[1..maxm] of edge;
+function min(x,y:qword):qword;
+begin
+    if x>y then exit(y)
+    else exit(x);
+end;
+procedure init;
+var
+    i,x,y,capa:longint;
+begin
+    fillchar(capa,sizeof(capa),0);
+    readln(n,m);
+    for i:=1 to m do
+        begin
+            read(truck[i,1],truck[i,2],truck[i,3]);
+            truck[i,3]:=truck[i,3]*1001+1;
+            inc(cap[truck[i,1],truck[i,2]],truck[i,3]);
+        end;
+end;
+function maxflow(v0,vm:integer):qword;
+var
+    visit:array[1..maxn]of boolean;
+    pre,flow:array[1..maxn] of qword;
+    i,jump:longint;
+    total,max,maxl,increse:qword;
+begin
+    total:=0;
+    while true do
+        begin
+            fillchar(visit,sizeof(visit),0);
+            fillchar(flow,sizeof(flow),0);
+            fillchar(pre,sizeof(pre),0);
+            flow[v0]:=maxlongint*10000;
+            while true do
+                begin
+                    max:=0;
+                    maxl:=0;
+                    for i:=1 to n do
+                        if not visit[i] and (flow[i]>max) then
+                            begin
+                                max:=flow[i];
+                                maxl:=i;
+                            end;
+                    i:=i;
+                    if (maxl=0)or(maxl=vm) then break;
+                    visit[maxl]:=true;
+                    for i:=1 to n do
+                        if flow[i]<min(max,capacity[maxl,i]) then
+                            begin
+                                pre[i]:=maxl;
+                                flow[i]:=min(max,capacity[maxl,i]);
+                            end;
+                end;
+            if maxl=0 then break;
+            increse:=flow[vm];
+            inc(total,increse);
+            i:=vm;
+            while i>1 do
+                begin
+                    jump:=pre[i];
+                    dec(capacity[jump,i],increse);
+                    inc(capacity[i,jump],increse);
+                    i:=jump;
+                end;
+        end;
+    exit(total);
+end;
+procedure work;
+var
+    max,temp:qword;
+    i,j:longint;
+    ans:array[0..maxm] of integer;
+begin
+    capacity:=cap;
+    max:=maxflow(1,n);
+    write(max div 1001,' ');
+    ans[0]:=0;
+    for i:=1 to m do
+        begin
+            if max=0 then break;
+            capacity:=cap;
+            dec(capacity[truck[i,1],truck[i,2]],truck[i,3]);
+            temp:=maxflow(1,n);
+            if temp+truck[i,3]=max then
+                begin
+                    dec(max,truck[i,3]);
+                    dec(cap[truck[i,1],truck[i,2]],truck[i,3]);
+                    inc(ans[0]);
+                    ans[ans[0]]:=i;
+                end;
+        end;
+    writeln(ans[0]);
+    for i:=1 to ans[0] do
+        writeln(ans[i]);
+end;
+begin
+    assign(input,'milk6.in');reset(input);
+    assign(output,'milk6.out');rewrite(output);
+    init;
+    work;
+    close(input);
+    close(output);
+end.
+
+
+This is a straight-forward min cut problem. Since we want the minimum set of edges in the case of a tie in total cost, multiply the cost of each edge by 1001 (one more than the maximum number of edges to delete) and add one. Thus, the cost of a min cut is the number of edges cut plus 1001 times the sum of the cost of the edges cut. Since the max cut can be very large, we must use doubles to avoid overflow.
+
+Determine the max flow using the standard method. To determine a cut associated with this flow, look at the residual graph. Flood fill out from the start node. The boundary of the flood fill corresponds to one cut in the graph. To determine this cut, find all edges that go from a node visited by the flood fill to a node not visited by the flood fill.
+
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 32
+
+/* residual graph */
+double graph[MAXN][MAXN];
+int nloc; /* number locations */
+
+/* the routes */
+int troute[1000][3]; /* start, end, size */
+int nroute; /* number routes */
+
+/* was this node visited by the flood fill? */
+int vis[1000];
+
+/* augment the graph by a flow */
+/* use dijkstra's to determine augmenting path of maximum capacity */
+double augment(void)
+ {
+  double flow[32]; /* the maximum flow to a node */
+  int touched[32]; /* have we visited this node? */
+  int src[32];     /* where the flow into this node comes from */
+  double max;
+  int mloc;
+  int lv; /* loop variable */
+  int t;
+
+  /* initialization */
+  memset(flow, 0, sizeof(flow));
+  memset(touched, 0, sizeof(touched));
+
+  /* flow to first node is unbounded */
+  flow[0] = 2000000000*1000.0 + 1.0;
+  while (1)
+   {
+    /* find node with maximum capacity that hasn't been visited */
+    mloc = -1;
+    max = 0.9; /* smaller than any node that has a path to it */
+    for (lv = 0; lv < nloc; lv++)
+      if (!touched[lv] && flow[lv] > max)
+       {
+        max = flow[lv];
+ mloc = lv;
+       }
+
+    if (mloc == -1) return -1; /* no augmented path! */
+
+    /* if best node is maximum capacity node, then we are done */
+    if (mloc == nloc-1) break; 
+
+    touched[mloc] = 1; /* mark as visited */
+    /* for each adjacent node, see if path through this
+       node has higher capacity than the current path for it */
+    for (lv = 0; lv < nloc; lv++)
+      if (graph[mloc][lv] > flow[lv] && max > flow[lv])
+       { /* better path found */
+
+        src[lv] = mloc;
+
+ flow[lv] = graph[mloc][lv];
+ if (flow[lv] > max) flow[lv] = max;
+       }
+   }
+
+  /* starting at end, augment path */
+  for (mloc = nloc-1; mloc > 0; mloc = src[mloc])
+   {
+    t = src[mloc];
+
+    graph[t][mloc] -= max; /* remove forward arc */
+    graph[mloc][t] += max; /* add back arc */
+   }
+
+  return max;
+ }
+
+/* calculate the flow */
+double calc_flow(void)
+ {
+  double rv = 0.0;
+  double t;
+
+  /* just augment until we can't */
+  while ((t = augment()) > -0.1)
+    rv += t;
+  return rv;
+ }
+
+/* create a graph with edges in troute */
+void make_graph(void)
+ {
+  int lv;
+
+  memset(graph, 0, sizeof(graph));
+  for (lv = 0; lv < nroute; lv++)
+    graph[troute[lv][0]][troute[lv][1]] += 1.0+(1001.0*troute[lv][2]);
+ }
+
+/* flood fill from this position */
+void flood_fill(int pos)
+ {
+  int lv;
+
+  vis[pos] = 1;
+
+  /* for each neighbor, flood fill if necessary */
+  for (lv = 0; lv < nloc; lv++)
+    if (!vis[lv] && graph[pos][lv] > 0.1) flood_fill(lv);
+ }
+
+int main(int argc, char **argv)
+ {
+  FILE *fout, *fin;
+  int lv;
+  double goal;
+  int t;
+  double tv;
+
+  if ((fin = fopen("milk6.in", "r")) == NULL)
+   {
+    perror ("fopen fin");
+    exit(1);
+   }
+  if ((fout = fopen("milk6.out", "w")) == NULL)
+   {
+    perror ("fopen fout");
+    exit(1);
+   }
+
+  fscanf (fin, "%d %d", &nloc, &nroute);
+  for (lv = 0; lv < nroute; lv++)
+   {
+    fscanf (fin, "%d %d %d", troute[lv]+0, troute[lv]+1, troute[lv]+2);
+
+    /* I'm using 0-based indexing instead of 1-based */
+    troute[lv][0]--;
+    troute[lv][1]--;
+   }
+
+  make_graph();
+  goal = calc_flow();
+
+  /* cost has been multiplied by 1001, so t is the real cost */
+  t = (int)(goal / 1001.0);
+  fprintf (fout, "%d %d\n", t, (int)(goal - t*1001.0));
+
+  /* find min cut */
+  
+  /* find all nodes reachable from warehouse 1*/
+  flood_fill(0);
+
+  for (lv = 0; lv < nroute; lv++)
+   { /* delete all arc from a reachable node to an unreachable one */
+    if (vis[troute[lv][0]] == 1 && !vis[troute[lv][1]])
+      fprintf (fout, "%d\n", lv+1);
+   }
+
+  return 0;
+ }
+
+
+题解
+
+很明显地，这是一个最小割的模型，设每边的权值为原始权值，则最大流的值就是最小割的容量，即最小损失。现在有两个问题：停止的线路数，使开始输入顺序最小
+为解决这两个问题，可将每边的权值修改为500000+i+500000*1001*c，这个式子有什么用呢？首先，每边的权值都加上500000，那么最大流(maxflow%(500000*1001))/500000就是停止的线路的数量，取500000的原因是500000>(0+999)*1000/2，即最大情况下0~999的i的和，否则可能由于i的值而使结果偏大。i项的含义就很明显了，为使输入顺序最小。最后一项中的1001则是因为最多有1000条边，所以500000*1001*c > 500000*1000，这三项分别独立，从而得出结果。
+第一次编最小割，题解可能啰嗦了一些…
+
+/*
+ID: dementr1
+PROG: milk6
+LANG: C++
+*/
+#include<iostream>
+#include<fstream>
+using namespace std;
+ifstream fin(“milk6.in”);
+ofstream fout(“milk6.out”);
+long long v[40][40],s[1001],e[1001],c[1001],f[40][40],leave[40][40],level[40];
+int M,N;
+bool vis[1001]={false};
+void init()
+{
+int i,j;
+fin>>M>>N;
+for(i=0;i<N;i++)
+{
+fin>>s[i]>>e[i]>>c[i];
+v[s[i]][e[i]]+=500000+i+(long long)500000*1001*c[i];
+}
+fin.close();
+}
+void createlevel()
+{
+int save[1001]={},closed=-1,open=0,now,i,j;
+memset(level,0,sizeof(level));
+memset(leave,0,sizeof(leave));
+level[1]=0;
+save[0]=1;
+for(i=1;i<=M;i++)
+for(j=1;j<=M;j++)
+leave[i][j]=v[i][j]-f[i][j];
+for(i=1;i<=M;i++)
+for(j=1;j<=M;j++)
+if(f[i][j]>0) leave[j][i]=f[i][j];
+while(closed<open)
+{
+closed++;
+now=save[closed];
+for(i=2;i<=M;i++)
+if(leave[now][i]>0)
+if(level[i]==0)
+{
+open++;
+save[open]=i;
+level[i]=level[now]+1;
+}
+}
+}
+long long dinic()
+{
+long long p[1001]={},u,i,min,ans=0;
+p[0]=1;
+p[1]=1;
+while(1)
+{
+createlevel();
+if(level[M]==0) break;
+while(1)
+{
+u=p[p[0]];
+if(u!=M)
+{
+bool flag=false;
+for(i=1;i<=M;i++)
+if(level[i]==level[u]+1&&leave[u][i]>0)
+{
+p[0]++;
+p[p[0]]=i;
+flag=true;
+break;
+}
+if(!flag)
+{
+p[0]–;
+for(i=1;i<=M;i++)
+if(level[i]==level[u]+1&&leave[u][i]>0)
+level[i]=0;
+level[u]=0;
+}
+}
+if(u!=M&&p[0]<=0) break;
+if(u==M)
+{
+min=leave[p[1]][p[2]];
+for(i=2;i<p[0];i++)
+if(leave[p[i]][p[i+1]]<min) min=leave[p[i]][p[i+1]];
+for(i=1;i<p[0];i++)
+f[p[i]][p[i+1]]+=min;
+for(i=1;i<p[0];i++)
+if(leave[p[i]][p[i+1]]-min==0)
+{
+p[0]=i;
+break;
+}
+ans+=min;
+break;
+}
+}
+}
+return ans;
+}
+void floodfill(int k)
+{
+int i;
+vis[k]=true;
+for(i=1;i<=M;i++)
+if(!vis[i]&&(leave[k][i]>0)||f[i][k]>0)
+floodfill(i);
+}
+void print(long long ans)
+{
+int i;
+fout<<ans/(500000*1001)<<” “<<(ans%(500000*1001))/500000<<endl;
+for(i=0;i<N;i++)
+if(vis[s[i]]&&!vis[e[i]])
+fout<<i+1<<endl;
+}
+int main()
+{
+long long ans;
+init();
+ans=dinic();
+floodfill(1);
+print(ans);
+return 0;
+}
+

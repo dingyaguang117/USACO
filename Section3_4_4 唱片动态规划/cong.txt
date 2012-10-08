@@ -1,0 +1,65 @@
+USER: Yaguang Ding [dingyag1]
+TASK: rockers
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.011 secs, 2884 KB]
+   Test 2: TEST OK [0.022 secs, 2884 KB]
+   Test 3: TEST OK [0.011 secs, 2884 KB]
+   Test 4: TEST OK [0.000 secs, 2884 KB]
+   Test 5: TEST OK [0.000 secs, 2884 KB]
+   Test 6: TEST OK [0.000 secs, 2884 KB]
+   Test 7: TEST OK [0.011 secs, 2884 KB]
+   Test 8: TEST OK [0.000 secs, 2884 KB]
+   Test 9: TEST OK [0.000 secs, 2884 KB]
+   Test 10: TEST OK [0.000 secs, 2884 KB]
+   Test 11: TEST OK [0.000 secs, 2884 KB]
+   Test 12: TEST OK [0.011 secs, 2884 KB]
+
+All tests OK.
+Your program ('rockers') produced all correct answers!  This is your
+submission #2 for this problem.  Congratulations!
+
+Here are the test data inputs:
+
+------- test 1 -------
+4 5 2
+4 2 4 3
+------- test 2 -------
+1 1 5
+6
+------- test 3 -------
+10 5 5
+5 3 5 3 5 3 5 3 5 2
+------- test 4 -------
+10 10 9
+9 7 8 6 10 9 8 6 5 9
+------- test 5 -------
+9 15 4
+15 7 8 6 9 5 10 4 11
+------- test 6 -------
+15 10 1
+3 6 7 9 6 8 6 7 5 8 10 7 6 3 4
+------- test 7 -------
+20 20 2
+10 15 19 18 11 15 14 16 12 14 15 10 10 16 14 16 14 15 16 10
+------- test 8 -------
+20 20 10
+18 15 16 10 2 20 14 17 3 7 16 15 18 16 20 16 13 9 4 16
+------- test 9 -------
+18 10 6
+4 9 6 3 9 7 6 9 4 1 10 9 5 8 5 4 7 6
+------- test 10 -------
+10 10 20
+8 3 6 4 10 8 2 9 5 10
+------- test 11 -------
+20 20 5
+4 9 2 19 5 3 10 15 18 4 3 9 14 17 1 20 15 19 12 6
+------- test 12 -------
+20 20 10
+19 15 1 5 6 19 15 18 13 19 18 5 3 6 2 6 19 13 15 16
+Keep up the good work!
+Thanks for your submission!

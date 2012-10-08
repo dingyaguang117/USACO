@@ -1,0 +1,54 @@
+USER: Yaguang Ding [dingyag1]
+TASK: heritage
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.000 secs, 3020 KB]
+   Test 2: TEST OK [0.000 secs, 3020 KB]
+   Test 3: TEST OK [0.011 secs, 3020 KB]
+   Test 4: TEST OK [0.000 secs, 3020 KB]
+   Test 5: TEST OK [0.011 secs, 3020 KB]
+   Test 6: TEST OK [0.000 secs, 3020 KB]
+   Test 7: TEST OK [0.000 secs, 3020 KB]
+   Test 8: TEST OK [0.011 secs, 3020 KB]
+   Test 9: TEST OK [0.000 secs, 3020 KB]
+
+All tests OK.
+YOUR PROGRAM ('heritage') WORKED FIRST TIME!  That's fantastic
+-- and a rare thing.  Please accept these special automated
+congratulations.
+
+Here are the test data inputs:
+
+------- test 1 -------
+ABEDFCHG
+CBADEFGH
+------- test 2 -------
+F
+F
+------- test 3 -------
+BCAD
+ABCD
+------- test 4 -------
+GOLEAFS
+SFAELOG
+------- test 5 -------
+GSHBAQTPM
+ABGHSPQTM
+------- test 6 -------
+AUBYCVDZEWFXGTH
+ZYUABVCDXWEFTGH
+------- test 7 -------
+ABDCJHKILMNPOQFEGRS
+ABCDEFHJIKLMNOPQGRS
+------- test 8 -------
+GFDIHKLJMBNESRTPOQAUCWVZYX
+ABDFGHIJKLMENOPRSTQCUVWXYZ
+------- test 9 -------
+EHGDIFJLKMBNCOQSPRAWUXZYTV
+ABDEGHFIJKLMCNOPQSRTUWXYZV
+Keep up the good work!
+Thanks for your submission!

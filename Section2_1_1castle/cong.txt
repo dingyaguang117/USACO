@@ -1,0 +1,22 @@
+USER: Yaguang Ding [dingyag1]
+TASK: castle
+LANG: C++
+
+Compiling...
+Compile: OK
+
+Executing...
+   Test 1: TEST OK [0.000 secs, 2912 KB]
+   Test 2: TEST OK [0.000 secs, 2912 KB]
+   Test 3: TEST OK [0.000 secs, 2912 KB]
+   Test 4: TEST OK [0.000 secs, 2912 KB]
+   Test 5: TEST OK [0.011 secs, 2912 KB]
+   Test 6: TEST OK [0.000 secs, 2912 KB]
+   Test 7: TEST OK [0.000 secs, 2912 KB]
+   Test 8: TEST OK [0.011 secs, 2912 KB]
+
+All tests OK.
+Your program ('castle') produced all correct answers!  This is your
+submission #10 for this problem.  Congratulations!
+
+Here are the test data inputs:

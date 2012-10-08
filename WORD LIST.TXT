@@ -1,0 +1,38 @@
+particular 		特别的
+		
+comprise 		组成
+
+Recursive		递归的
+
+likewise		同样的
+
+available		可用的，有效地
+
+
+
+
+
+
+
+
+
+
+
+16 types of programming contest problems
+
+Dynamic Programming 
+Greedy 
+Complete Search 
+Flood Fill 
+Shortest Path 
+Recursive Search Techniques 
+Minimum Spanning Tree 
+Knapsack 
+Computational Geometry 
+Network Flow 
+Eulerian Path 
+Two-Dimensional Convex Hull 
+BigNums 
+Heuristic Search 
+Approximate Search 
+Ad Hoc Problems 
